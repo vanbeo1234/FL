@@ -3,5 +3,5 @@
 ## Thông Tin Sinh Viên
 - **Họ và tên**: Dương Thị Bích Vân
 - **Mã SV**: BIT220168
-![alt](BT6.1.png)
-![alt](BT6.2.png)
+![alt](BT6.1.jpg)
+![alt](BT6.2.jpg)
