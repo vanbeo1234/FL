@@ -5,23 +5,23 @@ import { Card } from 'react-native-paper';
 export default function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const [error, setError] = useState(''); // Trạng thái cho thông báo lỗi
+  const [error, setError] = useState('');
 
-  // Hàm để kiểm tra số điện thoại
+
   const validatePhoneNumber = (input) => {
     const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
     if (phoneRegex.test(input)) {
       setIsValid(true);
-      setError(''); // Xóa thông báo lỗi nếu hợp lệ
+      setError(''); 
       return true;
     } else {
       setIsValid(false);
-      setError('Số điện thoại không hợp lệ'); // Hiển thị thông báo lỗi
+      setError('Số điện thoại không hợp lệ'); 
       return false;
     }
   };
 
-  // Hàm để format lại số điện thoại
+
   const formatPhoneNumber = (input) => {
     const cleaned = input.replace(/\D/g, '');
     if (cleaned.length <= 4) {
@@ -33,7 +33,7 @@ export default function App() {
     }
   };
 
-  // Xử lý sự kiện khi nhập số điện thoại
+
   const handleInputChange = (input) => {
     const formattedInput = formatPhoneNumber(input);
     setPhoneNumber(formattedInput);
@@ -41,7 +41,7 @@ export default function App() {
     validatePhoneNumber(formattedInput.replace(/\s/g, ''));
   };
 
-  // Xử lý sự kiện khi nhấn nút "Tiếp tục"
+
   const handleContinue = () => {
     if (isValid) {
       Alert.alert('Số điện thoại hợp lệ');
@@ -131,10 +131,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonEnabled: {
-    backgroundColor: '#28a745', // Màu xanh khi hợp lệ
+    backgroundColor: '#28a745', 
   },
   buttonDisabled: {
-    backgroundColor: '#ccc', // Màu xám khi không hợp lệ
+    backgroundColor: '#ccc', 
   },
   buttonText: {
     fontSize: 16,
