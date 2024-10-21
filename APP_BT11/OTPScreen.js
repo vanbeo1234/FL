@@ -1,0 +1,104 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Keyboard } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+
+const OTPScreen = () => {
+  const [otp, setOtp] = useState('');
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { phoneNumber } = route.params;
+
+  const handleVerifyOtp = async () => {
+    if (otp === '123456') {
+      try {
+        await AsyncStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đã đăng nhập
+        await AsyncStorage.setItem('phoneNumber', phoneNumber); // Lưu số điện thoại vào AsyncStorage
+        navigation.navigate('SuccessScreen', { phoneNumber });
+      } catch (error) {
+        Alert.alert('Lỗi', 'Không thể lưu trạng thái đăng nhập. Vui lòng thử lại.');
+        console.log('Error saving data', error);
+      }
+    } else {
+      Alert.alert('Lỗi', 'Mã OTP không đúng. Vui lòng thử lại.');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Xác minh OTP</Text>
+      <Text style={styles.subHeader}>
+        Mã OTP đã được gửi về số điện thoại {phoneNumber}
+      </Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nhập mã OTP là 123456"
+        keyboardType="numeric"
+        value={otp}
+        onChangeText={setOtp}
+        maxLength={6}
+        returnKeyType="done"
+        onSubmitEditing={Keyboard.dismiss}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
+        <Text style={styles.buttonText}>Xác minh</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: '#F5F6FA',
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#34495E',
+  },
+  subHeader: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 30,
+    color: '#7F8C8D',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#DADFE1',
+    borderRadius: 8,
+    padding: 15,
+    fontSize: 18,
+    marginBottom: 30,
+    backgroundColor: '#FFFFFF',
+    color: '#2C3E50',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#1ABC9C',
+    borderRadius: 10,
+    paddingVertical: 15,
+    alignItems: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+export default OTPScreen;
